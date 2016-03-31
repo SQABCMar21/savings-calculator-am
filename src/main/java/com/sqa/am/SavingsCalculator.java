@@ -46,13 +46,12 @@ public class SavingsCalculator {
 
 	public static void main(String[] args) {
 		welcomeUser();
-		while (true) {
-			requestToContinue();
+		while (requestToContinue()) {
 			requestValuesFromUser();
 			calculatePayments();
 			displayPayments();
-			farewellUser();
 		}
+		farewellUser();
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class SavingsCalculator {
 	 */
 	private static void calculatePayments() {
 		System.out.println("*Calculate Payments:\n-----------------------");
-		double monthlyInterest = (compoundInterestPercent / 100) / 12;
+		monthlyInterest = (compoundInterestPercent / 100) / 12;
 	}
 
 	/**
@@ -69,14 +68,14 @@ public class SavingsCalculator {
 	private static void displayPayments() {
 		System.out.println("Your total savings extra per month for  , " + accountName + "are: " + savingsExtraPerMonth
 				+ userName + "!");
-		double savingsExtraPerMonth = (initialAmount * monthlyInterest) + initialAmount;
+		savingsExtraPerMonth = (initialAmount * monthlyInterest) + initialAmount;
 	}
 
 	/**
 	 *
 	 */
 	private static void farewellUser() {
-		System.out.println("Thank you for using the Savings Calculator" + userName + "!");
+		System.out.println("Thank you for using the Savings Calculator " + userName + "!");
 		scanner.close();
 	}
 
