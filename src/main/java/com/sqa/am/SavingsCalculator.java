@@ -22,15 +22,21 @@ import java.util.Scanner;
  */
 public class SavingsCalculator {
 
+	static int compoundInterestPercent;
+
 	static String userName;
 
-	static int initialAmount;
+	static String accountName;
 
-	static int monthlyInterest;
+	static double initialAmount;
 
-	static int terminYears;
+	static double monthlyInterest;
 
-	static double compoundInterestPercent;
+	static double savingsExtraPerMonth;
+
+	static double terminMonths;
+
+	static double compoundInterest;
 
 	static double monthlyPayments;
 
@@ -40,12 +46,13 @@ public class SavingsCalculator {
 
 	public static void main(String[] args) {
 		welcomeUser();
-		initialAmount();
-		monthlyPayments();
-		compoundInterestRate();
-		terminYears();
-		calculatePayments();
-		farewellUser();
+		while (true) {
+			requestToContinue();
+			requestValuesFromUser();
+			calculatePayments();
+			displayPayments();
+			farewellUser();
+		}
 	}
 
 	/**
@@ -53,13 +60,16 @@ public class SavingsCalculator {
 	 */
 	private static void calculatePayments() {
 		System.out.println("*Calculate Payments:\n-----------------------");
+		double monthlyInterest = (compoundInterestPercent / 100) / 12;
 	}
 
 	/**
 	 *
 	 */
-	private static void compoundInterestRate() {
-		System.out.println("*Compound Interest Rate:\n-----------------------");
+	private static void displayPayments() {
+		System.out.println("Your total savings extra per month for  , " + accountName + "are: " + savingsExtraPerMonth
+				+ userName + "!");
+		double savingsExtraPerMonth = (initialAmount * monthlyInterest) + initialAmount;
 	}
 
 	/**
@@ -67,27 +77,44 @@ public class SavingsCalculator {
 	 */
 	private static void farewellUser() {
 		System.out.println("Thank you for using the Savings Calculator" + userName + "!");
+		scanner.close();
 	}
 
 	/**
 	 *
 	 */
-	private static void initialAmount() {
-		System.out.println("*Initial Amount:\n-----------------------");
+	private static boolean requestToContinue() {
+		System.out.println("*Request to Continue:\n----------------------");
+		while (true) {
+			System.out.println("Would you like to calculate another mortgage?");
+			String input = scanner.nextLine();
+			if (input.equalsIgnoreCase("Yes") || input.equalsIgnoreCase("Y")) {
+				return true;
+			} else if (input.equalsIgnoreCase("No") || input.equalsIgnoreCase("N")) {
+				return false;
+			} else {
+				System.out.println("Invalid option (" + input + "), please use Yes/Y or No/N.");
+			}
+		}
 	}
 
 	/**
 	 *
 	 */
-	private static void monthlyPayments() {
-		System.out.println("*Monthly Payments:\n-----------------------");
-	}
-
-	/**
-	 *
-	 */
-	private static void terminYears() {
-		System.out.println("*Term in Years:\n-----------------------");
+	private static void requestValuesFromUser() {
+		System.out.println("*Request Values:\n----------------------");
+		System.out.println("What is the name of the account you wish to calculate?");
+		String input = scanner.nextLine();
+		accountName = input;
+		System.out.println("How much do you currently have in your savings account?");
+		input = scanner.nextLine();
+		initialAmount = Double.parseDouble(input);
+		System.out.println("What is " + accountName + "'s compound interest:");
+		input = scanner.nextLine();
+		compoundInterest = Double.parseDouble(input);
+		System.out.println("What is " + accountName + "'s term in months:");
+		input = scanner.nextLine();
+		terminMonths = Double.parseDouble(input);
 	}
 
 	/**
