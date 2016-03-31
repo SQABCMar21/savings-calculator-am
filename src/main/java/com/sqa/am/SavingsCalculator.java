@@ -22,7 +22,7 @@ import java.util.Scanner;
  */
 public class SavingsCalculator {
 
-	static int compoundInterestPercent;
+	static double compoundInterestPercent;
 
 	static String userName;
 
@@ -34,7 +34,7 @@ public class SavingsCalculator {
 
 	static double savingsExtraPerMonth;
 
-	static double terminMonths;
+	static double numofYears;
 
 	static double compoundInterest;
 
@@ -66,8 +66,8 @@ public class SavingsCalculator {
 	 *
 	 */
 	private static void displayPayments() {
-		System.out.println("Your total savings extra per month for  , " + accountName + "are: " + savingsExtraPerMonth
-				+ userName + "!");
+		System.out.println("Your total savings extra per month for, " + accountName + " are: " + savingsExtraPerMonth
+				+ " " + userName + ".");
 		savingsExtraPerMonth = (initialAmount * monthlyInterest) + initialAmount;
 	}
 
@@ -85,7 +85,7 @@ public class SavingsCalculator {
 	private static boolean requestToContinue() {
 		System.out.println("*Request to Continue:\n----------------------");
 		while (true) {
-			System.out.println("Would you like to calculate another mortgage?");
+			System.out.println("Would you like to calculate savings?");
 			String input = scanner.nextLine();
 			if (input.equalsIgnoreCase("Yes") || input.equalsIgnoreCase("Y")) {
 				return true;
@@ -108,12 +108,15 @@ public class SavingsCalculator {
 		System.out.println("How much do you currently have in your savings account?");
 		input = scanner.nextLine();
 		initialAmount = Double.parseDouble(input);
-		System.out.println("What is " + accountName + "'s compound interest:");
+		System.out.println("What will be your monthly payments into your account?");
 		input = scanner.nextLine();
-		compoundInterest = Double.parseDouble(input);
-		System.out.println("What is " + accountName + "'s term in months:");
+		monthlyPayments = Double.parseDouble(input);
+		System.out.println("What is " + accountName + "'s annually compounded interest rate?");
 		input = scanner.nextLine();
-		terminMonths = Double.parseDouble(input);
+		compoundInterestPercent = Double.parseDouble(input);
+		System.out.println("How many years would you like to calculate?");
+		input = scanner.nextLine();
+		numofYears = Double.parseDouble(input);
 	}
 
 	/**
