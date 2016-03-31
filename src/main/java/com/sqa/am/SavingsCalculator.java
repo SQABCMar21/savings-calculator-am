@@ -9,6 +9,8 @@ package com.sqa.am;
 
 import java.util.Scanner;
 
+import com.sqa.am.util.helper.SavingsCalculationHelper;
+
 /**
  * SavingsCalculator //ADDD (description of class)
  * <p>
@@ -22,32 +24,33 @@ import java.util.Scanner;
  */
 public class SavingsCalculator {
 
-	static double compoundInterestPercent;
-
-	static String userName;
-
 	static String accountName;
-
-	static double initialAmount;
-
-	static double monthlyInterest;
-
-	static double savingsExtraPerMonth;
-
-	static double numofYears;
-
-	static double compoundInterest;
-
-	static double monthlyPayments;
 
 	static double calculatePayments;
 
+	static double compoundInterest;
+
+	static double compoundInterestPercent;
+
+	static double endingBalance;
+
+	static double initialAmount;
+
+	static double monthlyDeposits;
+
+	static double monthlyInterest;
+
+	static double numofYears;
+
 	static Scanner scanner = new Scanner(System.in);
+
+	static String userName;
 
 	public static void main(String[] args) {
 		welcomeUser();
 		while (requestToContinue()) {
 			requestValuesFromUser();
+			// Main area where I will change code
 			calculatePayments();
 			displayPayments();
 		}
@@ -59,16 +62,30 @@ public class SavingsCalculator {
 	 */
 	private static void calculatePayments() {
 		System.out.println("*Calculate Payments:\n-----------------------");
-		monthlyInterest = (compoundInterestPercent / 100) / 12;
+		// This can not be calculated as it changes ever month based on new
+		// account balance
+		// monthlyInterest = (compoundInterestPercent / 100) / 12;
+		// Will use my heloer method to calculate ending balance
+		endingBalance = SavingsCalculationHelper.calculateCumulativeTotalCompoundedMonthly(initialAmount,
+				monthlyDeposits, compoundInterest, (int) (numofYears * 12));
+
 	}
 
 	/**
 	 *
 	 */
 	private static void displayPayments() {
-		System.out.println("Your total savings extra per month for, " + accountName + " are: " + savingsExtraPerMonth
-				+ " " + userName + ".");
-		savingsExtraPerMonth = (initialAmount * monthlyInterest) + initialAmount;
+		// No need to give a monthly break down of savings (too difficult to
+		// calculate)
+		// System.out.println("Your total savings extra per month for, " +
+		// accountName + " are: " + savingsExtraPerMonth
+		// + " " + userName + ".");
+		// savingsExtraPerMonth = (initialAmount * monthlyInterest) +
+		// initialAmount;
+		String endingBalanceFormatted = String.format("$%,.2f", endingBalance);
+
+		System.out.println("Your ending balance for, " + accountName + " would be: " + endingBalanceFormatted
+				+ " after " + numofYears + " years, " + userName + ".");
 	}
 
 	/**
@@ -108,9 +125,9 @@ public class SavingsCalculator {
 		System.out.println("How much do you currently have in your savings account?");
 		input = scanner.nextLine();
 		initialAmount = Double.parseDouble(input);
-		System.out.println("What will be your monthly payments into your account?");
+		System.out.println("What will be your monthly deposits into your account?");
 		input = scanner.nextLine();
-		monthlyPayments = Double.parseDouble(input);
+		monthlyDeposits = Double.parseDouble(input);
 		System.out.println("What is " + accountName + "'s annually compounded interest rate?");
 		input = scanner.nextLine();
 		compoundInterestPercent = Double.parseDouble(input);
